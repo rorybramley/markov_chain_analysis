@@ -18,7 +18,8 @@ def read_time_series_data(path: str) -> tuple[pd.DataFrame, List[str]]:
     """Function to read in a time-series data set in .csv form"""
 
     df: pd.DataFrame = pd.read_csv(path)
-    renamed_df: pd.DataFrame = df.rename(columns=lambda col: col.lower().replace(" ", "_"))
+    dropped_df: pd.DataFrame = df.dropna(how='all', axis='columns')
+    renamed_df: pd.DataFrame = dropped_df.rename(columns=lambda col: col.lower().replace(" ", "_"))
     indexed_df: pd.DataFrame = renamed_df.set_index("month")
 
     column_names = indexed_df.columns.values.tolist()
