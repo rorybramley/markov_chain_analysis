@@ -20,23 +20,23 @@ def read_time_series_data(path: str) -> tuple[pd.DataFrame, List[str]]:
     df: pd.DataFrame = pd.read_csv(path)
     dropped_df: pd.DataFrame = df.dropna(how='all', axis='columns')
     renamed_df: pd.DataFrame = dropped_df.rename(columns=lambda col: col.lower().replace(" ", "_"))
-    indexed_df: pd.DataFrame = renamed_df.set_index("month")
+    indexed_df: pd.DataFrame = renamed_df.set_index("time")
 
     column_names = indexed_df.columns.values.tolist()
 
     return indexed_df, column_names
 
-def get_means_and_std_devs(df: pd.DataFrame) -> tuple[List[float], List[float]]:
+def get_means_and_std_devs(df: pd.DataFrame) -> tuple[dict[float], dict[str, float]]:
     """Function to get means and std devs for a DataFrame"""
 
-    means_list: List[float] = []
-    std_devs_list: List[float] = []
+    means_dict: dict[str, float] = {}
+    std_devs_dict: dict[str, float] = {}
 
     for column in df:
-        means_list.append(df[column].mean())
-        std_devs_list.append(df[column].std())
+        means_dict[column] = df[column].mean()
+        std_devs_dict[column] = df[column].std()
     
-    return means_list, std_devs_list
+    return means_dict, std_devs_dict
 
 def convert_columns_to_lists(df: pd.DataFrame) -> List[List[float]]:
     
