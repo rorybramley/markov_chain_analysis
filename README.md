@@ -11,3 +11,12 @@ output_writer.py takes the results of the previous and assembles them into a .xl
 orchestrator.ipynb ties this all together. This is for ease of use, but could also be turned into another script with a main() function to combine the previous steps into one.
 
 requirements.txt contains the Python packages necessary to run the project in a virtual environment.
+
+Can also run Markovs on any .csv file which contains time series data, as long as the time index column is called "time" as follows:
+    `growth_means_dict, growth_std_devs_dict, growth_future_dfs_dict = calculate_markovs("growth_mar.csv", 10)`
+
+One-step iteration data:
+    `print(growth_future_dfs_dict["employment"][0])`
+
+n-step iteration data (10 in this case):
+    `growth_future_dfs_dict["employment"][-1]`
